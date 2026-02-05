@@ -1,20 +1,21 @@
-class Solution {
-public:
-    int pivotIndex(vector<int>& nums) {
-    int totalSum = 0;  // To store the sum of all elements
-        for (int num : nums) {
-            totalSum += num;
-        }
-        
-        int leftSum = 0;  // Initialize leftSum to 0
-        for (int i = 0; i < nums.size(); ++i) {
-            // Right sum is totalSum - leftSum - nums[i] (current element)
-            if (leftSum == totalSum - leftSum - nums[i]) {
-                return i;  // Pivot index found
-            }
-            leftSum += nums[i];  // Update leftSum
-        }
-        
-        return -1;  // No pivot index found
-    }
-};
+1// Time Complexity : O(n)
+2class Solution {
+3public:
+4    int pivotIndex(vector<int>& nums) {
+5        // Initialize rightSum to store the sum of all the numbers strictly to the index's right...
+6        int rightSum = accumulate(nums.begin(), nums.end(), 0);
+7        // Initialize leftSum to store the sum of all the numbers strictly to the index's left...
+8        int leftSum = 0;
+9        // Traverse all elements through the loop...
+10        for (int idx = 0; idx < nums.size(); idx++) {
+11            // subtract current elements with from rightSum...
+12            rightSum -= nums[idx];
+13            // If the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right...
+14            if (leftSum == rightSum)
+15                return idx;     // Return the pivot index...
+16            // add current elements with leftSum...
+17            leftSum += nums[idx];
+18        }
+19        return -1;      // If there is no index that satisfies the conditions in the problem statement...
+20    }
+21};
